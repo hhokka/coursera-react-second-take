@@ -1,21 +1,7 @@
 import React, { Component } from "react";
-import {
-  Card,
-  CardImg,
-  CardImgOverlay,
-  CardText,
-  CardBody,
-  CardTitle
-} from "reactstrap";
+import { Card, CardImg, CardText, CardBody, CardTitle } from "reactstrap";
 
 class Dishdetail extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      selectedDish: null
-    };
-  }
   renderDish() {
     this.items = this.props.dish.comments.map((item, key) => (
       <ul className="list-unstyled">
