@@ -105,7 +105,6 @@ class Contact extends Component {
                     placeholder="First Name"
                     className="form-control"
                   />
-                  {/* <FormFeedback>{errors.firstname}</FormFeedback> */}
                 </Col>
               </Row>
               <Row>
@@ -120,7 +119,6 @@ class Contact extends Component {
                     placeholder="Last Name"
                     className="form-control"
                   />
-                  {/* <FormFeedback>{errors.lastname}</FormFeedback> */}
                 </Col>
               </Row>
               <Row>
@@ -135,7 +133,6 @@ class Contact extends Component {
                     placeholder="Tel. Number"
                     className="form-control"
                   />
-                  {/* <FormFeedback>{errors.telnum}</FormFeedback> */}
                 </Col>
               </Row>
               <Row>
@@ -150,7 +147,6 @@ class Contact extends Component {
                     placeholder="Email"
                     className="form-control"
                   />
-                  {/* <FormFeedback>{errors.firstname}</FormFeedback> */}
                 </Col>
               </Row>
               <Row>
