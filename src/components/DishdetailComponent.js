@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Card, CardImg, CardBody, CardText, CardTitle } from "reactstrap";
 import CommentForm from "./CommentFormComponent";
+import { Loading } from "./LoadingComponent";
 
 class Dishdetail extends Component {
   renderComments(comments, addComment, dishId) {
@@ -50,23 +51,41 @@ class Dishdetail extends Component {
   }
 
   render() {
-    const dish = this.props.dish;
-    const comments = this.props.comments;
-    if (dish == null) {
+    if (this.props.isLoading) {
+      return (
+        <div className="container">
+          <div className="row">
+            <Loading />
+          </div>
+        </div>
+      );
+    } else if (this.props.errMess) {
+      return (
+        <div className="container">
+          <div className="row">
+            <h4>{this.props.errMess}</h4>
+          </div>
+        </div>
+      );
+    } else if (this.props.dish != null) {
+      const dish = this.props.dish;
+      const comments = this.props.comments;
+      /*  if (dish == null) {
       return <div></div>;
+    } */
+      const dishItem = this.renderDish(dish);
+      const commentItem = this.renderComments(
+        comments,
+        this.props.addComment,
+        this.props.dish.id
+      );
+      return (
+        <div className="row">
+          {dishItem}
+          {commentItem}
+        </div>
+      );
     }
-    const dishItem = this.renderDish(dish);
-    const commentItem = this.renderComments(
-      comments,
-      this.props.addComment,
-      this.props.dish.id
-    );
-    return (
-      <div className="row">
-        {dishItem}
-        {commentItem}
-      </div>
-    );
   }
 }
 
