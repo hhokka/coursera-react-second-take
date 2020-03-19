@@ -3,7 +3,7 @@ import { Card, CardImg, CardBody, CardText, CardTitle } from "reactstrap";
 import CommentForm from "./CommentFormComponent";
 
 class Dishdetail extends Component {
-  renderComments(comments) {
+  renderComments(comments, addComment, dishId) {
     if (comments == null) {
       return <div></div>;
     }
@@ -26,7 +26,7 @@ class Dishdetail extends Component {
       <div className="col-12 col-md-5 m-1">
         <h4> Comments </h4>
         <ul className="list-unstyled">{cmnts}</ul>
-        <CommentForm></CommentForm>
+        <CommentForm dishId={dishId} addComment={addComment}></CommentForm>
       </div>
     );
   }
@@ -56,7 +56,11 @@ class Dishdetail extends Component {
       return <div></div>;
     }
     const dishItem = this.renderDish(dish);
-    const commentItem = this.renderComments(comments);
+    const commentItem = this.renderComments(
+      comments,
+      this.props.addComment,
+      this.props.dish.id
+    );
     return (
       <div className="row">
         {dishItem}

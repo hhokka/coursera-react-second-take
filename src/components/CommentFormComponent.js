@@ -41,8 +41,22 @@ class CommentForm extends Component {
     };
   }
   handleSubmit(values) {
-    console.log("Current State is: " + JSON.stringify(values));
-    alert("Current State is: " + JSON.stringify(values));
+    alert(
+      "Dish Id: " +
+        this.props.dishId +
+        " rating: " +
+        values.rating +
+        " author: " +
+        values.author +
+        " comment: " +
+        values.comment
+    );
+    this.props.addComment(
+      this.props.dishId,
+      values.rating,
+      values.author,
+      values.comment
+    );
   }
 
   toggleModal() {
@@ -91,14 +105,14 @@ class CommentForm extends Component {
                 </Col>
               </Row>
               <Row className="form-group">
-                <Label htmlFor="yourname" md={2}>
+                <Label htmlFor="author" md={2}>
                   Your Name
                 </Label>
                 <Col md={10}>
                   <Control.text
-                    model=".yourname"
-                    id="yourname"
-                    name="yourname"
+                    model=".author"
+                    id="author"
+                    name="author"
                     placeholder="Your Name"
                     className="form-control"
                     validators={{
@@ -109,7 +123,7 @@ class CommentForm extends Component {
                   />
                   <Errors
                     className="text-danger"
-                    model=".yourname"
+                    model=".author"
                     show="touched"
                     messages={{
                       required: "Required",
@@ -121,14 +135,14 @@ class CommentForm extends Component {
               </Row>
 
               <Row>
-                <Label htmlFor="message" md={2}>
+                <Label htmlFor="comment" md={2}>
                   Your Feedback
                 </Label>
                 <Col md={10}>
                   <Control.textarea
-                    model=".message"
-                    id="message"
-                    name="message"
+                    model=".comment"
+                    id="comment"
+                    name="comment"
                     rows="12"
                     className="form-control"
                   />
