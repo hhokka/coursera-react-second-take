@@ -5,7 +5,7 @@ import { Loading } from "./LoadingComponent";
 import { baseUrl } from "../shared/baseUrl";
 
 class Dishdetail extends Component {
-  renderComments(comments, addComment, dishId) {
+  renderComments(comments, postComment, dishId) {
     if (comments == null) {
       return <div></div>;
     }
@@ -28,7 +28,7 @@ class Dishdetail extends Component {
       <div className="col-12 col-md-5 m-1">
         <h4> Comments </h4>
         <ul className="list-unstyled">{cmnts}</ul>
-        <CommentForm dishId={dishId} addComment={addComment}></CommentForm>
+        <CommentForm dishId={dishId} postComment={postComment}></CommentForm>
       </div>
     );
   }
@@ -77,7 +77,7 @@ class Dishdetail extends Component {
       const dishItem = this.renderDish(dish);
       const commentItem = this.renderComments(
         comments,
-        this.props.addComment,
+        this.props.postComment,
         this.props.dish.id
       );
       return (
