@@ -11,12 +11,14 @@ import {
   CardTitle
 } from "reactstrap";
 import { Link } from "react-router-dom";
+import { baseUrl } from "../shared/baseUrl";
+import { Loading } from "./LoadingComponent";
 
 function RenderLeader({ leader }) {
   return (
     <div>
       <Media>
-        <Media object src={leader.image} alt="Leader Image" />
+        <Media object src={baseUrl + leader.image} alt="Leader Image" />
         <Media body>
           <Media heading>{leader.name}</Media>
           {leader.description}
@@ -27,13 +29,32 @@ function RenderLeader({ leader }) {
 }
 
 function About(props) {
-  const leaders = props.leaders.map(leader => {
+  const leaders = props.leaders.leaders.map(leader => {
     return (
       <div key={leader.id}>
         <RenderLeader leader={leader} />
       </div>
     );
   });
+  if (props.leaders.isLoading) {
+    return (
+      <div className="container">
+        <div className="row">
+          <Loading />
+        </div>
+      </div>
+    );
+  } else if (props.leaders.errMess) {
+    return (
+      <div className="container">
+        <div className="row">
+          <div className="col-12">
+            <h4>{props.leaders.errMess}</h4>
+          </div>
+        </div>
+      </div>
+    );
+  }
   return (
     <div className="container">
       <div className="row">

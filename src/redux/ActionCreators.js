@@ -7,6 +7,104 @@ export const addComment = comment => ({
   payload: comment
 });
 
+export const addFeedback = value => ({
+  type: ActionTypes.ADD_FEEDBACK,
+  payload: value
+});
+
+export const postFeedback = (
+  firstname,
+  lastname,
+  phone,
+  email,
+  agree,
+  contactType,
+  message
+) => dispatch => {
+  const feedback = {
+    firstname: firstname,
+    lastname: lastname,
+    phone: phone,
+    email: email,
+    agree: agree,
+    contactType: contactType,
+    message: message
+  };
+
+  return fetch(baseUrl + "feedback", {
+    method: "POST",
+    body: JSON.stringify(feedback),
+    headers: {
+      "Content-Type": "application/json"
+    },
+    credentials: "same-origin"
+  })
+    .then(
+      response => {
+        if (response.ok) {
+          return response;
+        } else {
+          let error = new Error(
+            "Error " + response.status + ": " + response.statusText
+          );
+          error.response = response;
+          throw error;
+        }
+      },
+      error => {
+        let errormsg = new Error(error.message);
+        throw errormsg;
+      }
+    )
+    .then(response => response.json())
+    .then(response => dispatch(addFeedback(response)))
+    .catch(error => {
+      console.log("Post feedback ", error.message);
+      alert("Your feedback could not be posted\nError: " + error.message);
+    });
+};
+/* export const postFeedback = values => dispatch => {
+  const newFeedback = {
+    firstname: values.firstname,
+    lastname: values.lastname,
+    telnum: values.telnum,
+    email: values.email,
+    agree: values.agree,
+    message: values.message
+  };
+  alert(JSON.stringify(newFeedback));
+  return fetch(baseUrl + "feedback", {
+    method: "POST",
+    body: JSON.stringify(newFeedback),
+    headers: {
+      "Content-Type": "application/json"
+    },
+    credentials: "same-origin"
+  })
+    .then(
+      response => {
+        if (response.ok) {
+          return response;
+        } else {
+          var error = new Error(
+            "Error " + response.status + ": " + response.statusText
+          );
+          error.response = response;
+          throw error;
+        }
+      },
+      error => {
+        throw error;
+      }
+    )
+    .then(response => response.json())
+    .then(response => dispatch(postFeedback(response)))
+    .catch(error => {
+      console.log("post feedback", error.message);
+      alert("Your feedback could not be posted\nError: " + error.message);
+    });
+}; */
+
 export const postComment = (dishId, rating, author, comment) => dispatch => {
   const newComment = {
     dishId: dishId,
@@ -161,4 +259,44 @@ export const promosFailed = errmess => ({
 export const addPromos = promos => ({
   type: ActionTypes.ADD_PROMOS,
   payload: promos
+});
+
+export const fetchLeaders = () => dispatch => {
+  dispatch(leadersLoading());
+
+  return fetch(baseUrl + "leaders")
+    .then(
+      response => {
+        if (response.ok) {
+          return response;
+        } else {
+          var error = new Error(
+            "Error " + response.status + ": " + response.statusText
+          );
+          error.response = response;
+          throw error;
+        }
+      },
+      error => {
+        var errmess = new Error(error.message);
+        throw errmess;
+      }
+    )
+    .then(response => response.json())
+    .then(leaders => dispatch(addLeaders(leaders)))
+    .catch(error => dispatch(leadersFailed(error.message)));
+};
+
+export const leadersLoading = () => ({
+  type: ActionTypes.LEADERS_LOADING
+});
+
+export const leadersFailed = errmess => ({
+  type: ActionTypes.LEADERS_FAILED,
+  payload: errmess
+});
+
+export const addLeaders = leaders => ({
+  type: ActionTypes.ADD_LEADERS,
+  payload: leaders
 });
